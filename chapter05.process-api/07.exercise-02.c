@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
   }
   else if (rc == 0)
   {
-    printf("hello, this is child process, I am writing the file..");
+    printf("hello, this is child process, I am writing the file.."); // 不执行
     char *myargs[3];
     myargs[0] = strdup("wc");
     myargs[1] = strdup("07.exercise-02.c");
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
   }
   else
   {
-    printf("hello, this is parent process, I am writing the file..");
+    printf("hello, this is parent process, I am writing the file.."); // 不执行
     char *myargs[3];
     myargs[0] = strdup("wc");
     myargs[1] = strdup("06.exercise-01.c");
