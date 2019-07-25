@@ -16,17 +16,18 @@
 int main(int argc, char *argv[])
 {
 
-  int rc = fork();
+  pid_t rc = fork();
+
   if (rc == 0)
   {
-    int status = wait(NULL);
-    printf("In child process(pid:%d), and status is %d\n", getpid(), status);
+    int cpid = wait(NULL);
+    printf("In child process(pid:%d), and pid is %d\n", getpid(), cpid);
   }
   else if (rc > 0)
   {
-    int status = wait(NULL);
+    int cpid = wait(NULL);
     printf("In parent process(pid:%d)\n", getpid());
-    printf("And child process's status is %d\n", status);
+    printf("And child process's pid is %d\n", cpid);
   }
   else
   {
