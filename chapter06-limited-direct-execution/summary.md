@@ -31,7 +31,7 @@ The problem is once the process begins to run the OS becomes a complete outsider
 
 The `limited` means the process can perform some operations under supervision.
 
-On this premise, the processor is design to surpport two modes: 
+On this premise, the processor is designed to surpport two modes: 
 * User mode
 * Kernel mode
 
