@@ -32,3 +32,16 @@ T(response) = (0 + 1 + 2) / 3 = 1
 The jobs order is from shortest to longest.
 
 ### Q5: To what kind of workload and time slice, the SJF and RR have the same response time?
+
+The jobs's running time equals to the time slice.
+
+### Q6: With the increase of job's length, what kind of response time of SJF will be like? Can you simulate the trend of it with a program?
+
+If all jobs arrive at the same time, and their running time is the same.
+
+The response time will increase linearly.
+
+The simulation program is in `question-06.c`.
+
+
+
