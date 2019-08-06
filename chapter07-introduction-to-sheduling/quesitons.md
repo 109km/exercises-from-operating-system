@@ -43,5 +43,14 @@ The response time will increase linearly.
 
 The simulation program is in `question-06.c`.
 
+### Q7: With the increase of time slice, what are the changes of RR's response time? Can you write an equation to calculate the worst response time under the given conditions of N working time?
 
+Obviously the RR's reponse time will increase. 
 
+The worst case is all jobs arrive at the same time. So only the first job can be executed at once, others will be waiting.
+
+Assume time slice is n, in this case the average response time is : 
+
+```
+Average T(response) = 0 + n + 2n + 3n + ... + n * (N - 1)
+```
