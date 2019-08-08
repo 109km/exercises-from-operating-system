@@ -574,132 +574,15 @@ IO DONE
 
 ### 4. Design two jobs' workloads and arguments, make one of them to dupe the sheduler to get 99% of CPU's time in the particular time period.(Use rules 4a and 4b, open with -S)
 
-```
-Here is the list of inputs:
-OPTIONS jobs 2
-OPTIONS queues 3
-OPTIONS allotments for queue  2 is   1
-OPTIONS quantum length for queue  2 is  10
-OPTIONS allotments for queue  1 is   1
-OPTIONS quantum length for queue  1 is  10
-OPTIONS allotments for queue  0 is   1
-OPTIONS quantum length for queue  0 is  10
-OPTIONS boost 0
-OPTIONS ioTime 5
-OPTIONS stayAfterIO True
-OPTIONS iobump False
+`python3 mlfq.py -n 3 -q 10 -M 0 -i 1 -l 10,30,9:0,50,0 -c -S`
 
 
-For each job, three defining characteristics are given:
-  startTime : at what time does the job enter the system
-  runTime   : the total CPU time needed by the job to finish
-  ioFreq    : every ioFreq time units, the job issues an I/O
-              (the I/O takes ioTime units to complete)
+### 5. In a given system, if the top queue's time slice is 10ms, how to frequently put the jobs into top queue again(-B signal) to make sure a long time job can gain 5% CPU at least?
 
-Job List:
-  Job  0: startTime   0 - runTime  30 - ioFreq   9
-  Job  1: startTime   0 - runTime  50 - ioFreq   0
+`python3 mlfq.py -n 3 -q 10 -j 50 -m 100 -B 20`
 
+### 6. For a job that just finished I/O, it should be put into which side of the queue? Use `-l` to simulate it. Try some workloads, find the effects.
 
-Execution Trace:
+It should be put to the queue's tail.
 
-[ time 0 ] JOB BEGINS by JOB 0
-[ time 0 ] JOB BEGINS by JOB 1
-[ time 0 ] Run JOB 0 at PRIORITY 2 [ TICKS 9 ALLOT 1 TIME 29 (of 30) ]
-[ time 1 ] Run JOB 0 at PRIORITY 2 [ TICKS 8 ALLOT 1 TIME 28 (of 30) ]
-[ time 2 ] Run JOB 0 at PRIORITY 2 [ TICKS 7 ALLOT 1 TIME 27 (of 30) ]
-[ time 3 ] Run JOB 0 at PRIORITY 2 [ TICKS 6 ALLOT 1 TIME 26 (of 30) ]
-[ time 4 ] Run JOB 0 at PRIORITY 2 [ TICKS 5 ALLOT 1 TIME 25 (of 30) ]
-[ time 5 ] Run JOB 0 at PRIORITY 2 [ TICKS 4 ALLOT 1 TIME 24 (of 30) ]
-[ time 6 ] Run JOB 0 at PRIORITY 2 [ TICKS 3 ALLOT 1 TIME 23 (of 30) ]
-[ time 7 ] Run JOB 0 at PRIORITY 2 [ TICKS 2 ALLOT 1 TIME 22 (of 30) ]
-[ time 8 ] Run JOB 0 at PRIORITY 2 [ TICKS 1 ALLOT 1 TIME 21 (of 30) ]
-[ time 9 ] IO_START by JOB 0
-IO DONE
-[ time 9 ] Run JOB 1 at PRIORITY 2 [ TICKS 9 ALLOT 1 TIME 49 (of 50) ]
-[ time 10 ] Run JOB 1 at PRIORITY 2 [ TICKS 8 ALLOT 1 TIME 48 (of 50) ]
-[ time 11 ] Run JOB 1 at PRIORITY 2 [ TICKS 7 ALLOT 1 TIME 47 (of 50) ]
-[ time 12 ] Run JOB 1 at PRIORITY 2 [ TICKS 6 ALLOT 1 TIME 46 (of 50) ]
-[ time 13 ] Run JOB 1 at PRIORITY 2 [ TICKS 5 ALLOT 1 TIME 45 (of 50) ]
-[ time 14 ] IO_DONE by JOB 0
-[ time 14 ] Run JOB 1 at PRIORITY 2 [ TICKS 4 ALLOT 1 TIME 44 (of 50) ]
-[ time 15 ] Run JOB 1 at PRIORITY 2 [ TICKS 3 ALLOT 1 TIME 43 (of 50) ]
-[ time 16 ] Run JOB 1 at PRIORITY 2 [ TICKS 2 ALLOT 1 TIME 42 (of 50) ]
-[ time 17 ] Run JOB 1 at PRIORITY 2 [ TICKS 1 ALLOT 1 TIME 41 (of 50) ]
-[ time 18 ] Run JOB 1 at PRIORITY 2 [ TICKS 0 ALLOT 1 TIME 40 (of 50) ]
-[ time 19 ] Run JOB 0 at PRIORITY 2 [ TICKS 9 ALLOT 1 TIME 20 (of 30) ]
-[ time 20 ] Run JOB 0 at PRIORITY 2 [ TICKS 8 ALLOT 1 TIME 19 (of 30) ]
-[ time 21 ] Run JOB 0 at PRIORITY 2 [ TICKS 7 ALLOT 1 TIME 18 (of 30) ]
-[ time 22 ] Run JOB 0 at PRIORITY 2 [ TICKS 6 ALLOT 1 TIME 17 (of 30) ]
-[ time 23 ] Run JOB 0 at PRIORITY 2 [ TICKS 5 ALLOT 1 TIME 16 (of 30) ]
-[ time 24 ] Run JOB 0 at PRIORITY 2 [ TICKS 4 ALLOT 1 TIME 15 (of 30) ]
-[ time 25 ] Run JOB 0 at PRIORITY 2 [ TICKS 3 ALLOT 1 TIME 14 (of 30) ]
-[ time 26 ] Run JOB 0 at PRIORITY 2 [ TICKS 2 ALLOT 1 TIME 13 (of 30) ]
-[ time 27 ] Run JOB 0 at PRIORITY 2 [ TICKS 1 ALLOT 1 TIME 12 (of 30) ]
-[ time 28 ] IO_START by JOB 0
-IO DONE
-[ time 28 ] Run JOB 1 at PRIORITY 1 [ TICKS 9 ALLOT 1 TIME 39 (of 50) ]
-[ time 29 ] Run JOB 1 at PRIORITY 1 [ TICKS 8 ALLOT 1 TIME 38 (of 50) ]
-[ time 30 ] Run JOB 1 at PRIORITY 1 [ TICKS 7 ALLOT 1 TIME 37 (of 50) ]
-[ time 31 ] Run JOB 1 at PRIORITY 1 [ TICKS 6 ALLOT 1 TIME 36 (of 50) ]
-[ time 32 ] Run JOB 1 at PRIORITY 1 [ TICKS 5 ALLOT 1 TIME 35 (of 50) ]
-[ time 33 ] IO_DONE by JOB 0
-[ time 33 ] Run JOB 0 at PRIORITY 2 [ TICKS 9 ALLOT 1 TIME 11 (of 30) ]
-[ time 34 ] Run JOB 0 at PRIORITY 2 [ TICKS 8 ALLOT 1 TIME 10 (of 30) ]
-[ time 35 ] Run JOB 0 at PRIORITY 2 [ TICKS 7 ALLOT 1 TIME 9 (of 30) ]
-[ time 36 ] Run JOB 0 at PRIORITY 2 [ TICKS 6 ALLOT 1 TIME 8 (of 30) ]
-[ time 37 ] Run JOB 0 at PRIORITY 2 [ TICKS 5 ALLOT 1 TIME 7 (of 30) ]
-[ time 38 ] Run JOB 0 at PRIORITY 2 [ TICKS 4 ALLOT 1 TIME 6 (of 30) ]
-[ time 39 ] Run JOB 0 at PRIORITY 2 [ TICKS 3 ALLOT 1 TIME 5 (of 30) ]
-[ time 40 ] Run JOB 0 at PRIORITY 2 [ TICKS 2 ALLOT 1 TIME 4 (of 30) ]
-[ time 41 ] Run JOB 0 at PRIORITY 2 [ TICKS 1 ALLOT 1 TIME 3 (of 30) ]
-[ time 42 ] IO_START by JOB 0
-IO DONE
-[ time 42 ] Run JOB 1 at PRIORITY 1 [ TICKS 4 ALLOT 1 TIME 34 (of 50) ]
-[ time 43 ] Run JOB 1 at PRIORITY 1 [ TICKS 3 ALLOT 1 TIME 33 (of 50) ]
-[ time 44 ] Run JOB 1 at PRIORITY 1 [ TICKS 2 ALLOT 1 TIME 32 (of 50) ]
-[ time 45 ] Run JOB 1 at PRIORITY 1 [ TICKS 1 ALLOT 1 TIME 31 (of 50) ]
-[ time 46 ] Run JOB 1 at PRIORITY 1 [ TICKS 0 ALLOT 1 TIME 30 (of 50) ]
-[ time 47 ] IO_DONE by JOB 0
-[ time 47 ] Run JOB 0 at PRIORITY 2 [ TICKS 9 ALLOT 1 TIME 2 (of 30) ]
-[ time 48 ] Run JOB 0 at PRIORITY 2 [ TICKS 8 ALLOT 1 TIME 1 (of 30) ]
-[ time 49 ] Run JOB 0 at PRIORITY 2 [ TICKS 7 ALLOT 1 TIME 0 (of 30) ]
-[ time 50 ] FINISHED JOB 0
-[ time 50 ] Run JOB 1 at PRIORITY 0 [ TICKS 9 ALLOT 1 TIME 29 (of 50) ]
-[ time 51 ] Run JOB 1 at PRIORITY 0 [ TICKS 8 ALLOT 1 TIME 28 (of 50) ]
-[ time 52 ] Run JOB 1 at PRIORITY 0 [ TICKS 7 ALLOT 1 TIME 27 (of 50) ]
-[ time 53 ] Run JOB 1 at PRIORITY 0 [ TICKS 6 ALLOT 1 TIME 26 (of 50) ]
-[ time 54 ] Run JOB 1 at PRIORITY 0 [ TICKS 5 ALLOT 1 TIME 25 (of 50) ]
-[ time 55 ] Run JOB 1 at PRIORITY 0 [ TICKS 4 ALLOT 1 TIME 24 (of 50) ]
-[ time 56 ] Run JOB 1 at PRIORITY 0 [ TICKS 3 ALLOT 1 TIME 23 (of 50) ]
-[ time 57 ] Run JOB 1 at PRIORITY 0 [ TICKS 2 ALLOT 1 TIME 22 (of 50) ]
-[ time 58 ] Run JOB 1 at PRIORITY 0 [ TICKS 1 ALLOT 1 TIME 21 (of 50) ]
-[ time 59 ] Run JOB 1 at PRIORITY 0 [ TICKS 0 ALLOT 1 TIME 20 (of 50) ]
-[ time 60 ] Run JOB 1 at PRIORITY 0 [ TICKS 9 ALLOT 1 TIME 19 (of 50) ]
-[ time 61 ] Run JOB 1 at PRIORITY 0 [ TICKS 8 ALLOT 1 TIME 18 (of 50) ]
-[ time 62 ] Run JOB 1 at PRIORITY 0 [ TICKS 7 ALLOT 1 TIME 17 (of 50) ]
-[ time 63 ] Run JOB 1 at PRIORITY 0 [ TICKS 6 ALLOT 1 TIME 16 (of 50) ]
-[ time 64 ] Run JOB 1 at PRIORITY 0 [ TICKS 5 ALLOT 1 TIME 15 (of 50) ]
-[ time 65 ] Run JOB 1 at PRIORITY 0 [ TICKS 4 ALLOT 1 TIME 14 (of 50) ]
-[ time 66 ] Run JOB 1 at PRIORITY 0 [ TICKS 3 ALLOT 1 TIME 13 (of 50) ]
-[ time 67 ] Run JOB 1 at PRIORITY 0 [ TICKS 2 ALLOT 1 TIME 12 (of 50) ]
-[ time 68 ] Run JOB 1 at PRIORITY 0 [ TICKS 1 ALLOT 1 TIME 11 (of 50) ]
-[ time 69 ] Run JOB 1 at PRIORITY 0 [ TICKS 0 ALLOT 1 TIME 10 (of 50) ]
-[ time 70 ] Run JOB 1 at PRIORITY 0 [ TICKS 9 ALLOT 1 TIME 9 (of 50) ]
-[ time 71 ] Run JOB 1 at PRIORITY 0 [ TICKS 8 ALLOT 1 TIME 8 (of 50) ]
-[ time 72 ] Run JOB 1 at PRIORITY 0 [ TICKS 7 ALLOT 1 TIME 7 (of 50) ]
-[ time 73 ] Run JOB 1 at PRIORITY 0 [ TICKS 6 ALLOT 1 TIME 6 (of 50) ]
-[ time 74 ] Run JOB 1 at PRIORITY 0 [ TICKS 5 ALLOT 1 TIME 5 (of 50) ]
-[ time 75 ] Run JOB 1 at PRIORITY 0 [ TICKS 4 ALLOT 1 TIME 4 (of 50) ]
-[ time 76 ] Run JOB 1 at PRIORITY 0 [ TICKS 3 ALLOT 1 TIME 3 (of 50) ]
-[ time 77 ] Run JOB 1 at PRIORITY 0 [ TICKS 2 ALLOT 1 TIME 2 (of 50) ]
-[ time 78 ] Run JOB 1 at PRIORITY 0 [ TICKS 1 ALLOT 1 TIME 1 (of 50) ]
-[ time 79 ] Run JOB 1 at PRIORITY 0 [ TICKS 0 ALLOT 1 TIME 0 (of 50) ]
-[ time 80 ] FINISHED JOB 1
-
-Final statistics:
-  Job  0: startTime   0 - response   0 - turnaround  50
-  Job  1: startTime   0 - response   9 - turnaround  80
-
-  Avg  1: startTime n/a - response 4.50 - turnaround 65.00
-```
+`python3 mlfq.py -n 1 -q 10 -i 10 -l 0,30,10:0,50,5 -c`
