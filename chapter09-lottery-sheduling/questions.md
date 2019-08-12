@@ -282,3 +282,7 @@ Random 921451 -> Winning ticket 51 (of 100) -> Run 0
  (* job:0 timeleft:1 tix:100 ) 
  (  job:1 timeleft:0 tix:--- ) 
 ```
+
+### Q4. What happens if quantum becomes larger?
+
+The unfairness may become larger.
