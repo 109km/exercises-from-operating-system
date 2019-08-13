@@ -114,6 +114,6 @@ After 10ms, the CPU0 is on its vocation while CPU1 is still working hard. So a p
 
 This policy is called `migration`. The system will decide which jobs can be migrated to another CPU accroding to each CPU's work load. But how?
 
-One approach is to use a technique known as `working stealing`: A queue that is low on jobs will ocassionally peek at another queue, to see how full it is. But how to set the right threshold? Just like the RR's quantum.
+One approach is to use a technique known as `working stealing`: A queue that is low on jobs will ocassionally peek at another queue, to see how full it is. But how to set the right threshold?
 
 
