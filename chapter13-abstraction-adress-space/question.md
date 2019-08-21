@@ -1,1 +1,4 @@
-### 1. create a little program that uses a certain amount of memory,called `memory-user.c`. This program should take one command line argument: the number of megabytes of memory it will use. When run, it should allocate an array, and constantly stream through the array, touching each entry. The program should do this indefinitely, or, perhaps, for a certain amount of time also specified at the command line.
+### 1. Write a program named `null.c`, it creates an int pointer and set its value to `NULL`, then try to free its memory, what will happen?
+
+See `null.c`. Nothing happens. The `NULL`'s address is always `0x0`.
+
