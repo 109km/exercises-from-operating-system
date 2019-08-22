@@ -26,13 +26,34 @@ free(void *address)
 
 When using `malloc()` and `free()` some common errors.
 
-1. Forgetting To Allocate Memory: 
-2. Not Allocating Enough Memory
-3. Forgetting to Initialize Allocated Memory
-4. Forgetting To Free Memory
-5. Freeing Memory Before You Are Done With It
-6. Freeing Memory Repeatedly
-7. Calling free() Incorrectly: only receives the pointers returned from `malloc`, if the pointer is from other ways, bad things will happen.
+* Forgetting To Allocate Memory.
+
+The wrong way:
+```c
+char *src = "hello";
+char *dst; // oops! unallocated
+strcpy(dst, src); // segfault and die
+```
+The right way:
+```c
+char *src = "hello";
+char *dst = (char *) malloc(strlen(src) + 1);
+strcpy(dst, src); // work properly
+```
+
+* Not Allocating Enough Memory
+
+```c
+char *src = "hello";
+char *dst = (char *) malloc(strlen(src)); // too small! The length need to + 1.
+strcpy(dst, src); // work properly
+```
+
+* Forgetting to Initialize Allocated Memory. Called `malloc()`, but no values are filled.
+* Forgetting To Free Memory. Forgeted to `free()` the allocated memory.
+* Freeing Memory Before You Are Done With It. This can cause memory leak.
+* Freeing Memory Repeatedly. Free the memory more than once.
+* Calling free() Incorrectly: only receives the pointers returned from `malloc`, if the pointer is from other ways, bad things will happen.
 
 
 
