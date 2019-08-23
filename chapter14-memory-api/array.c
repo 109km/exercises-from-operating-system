@@ -5,7 +5,15 @@ int main()
 {
   int *data = NULL;
   data = (int *)malloc(100 * sizeof(int));
-  data[100] = 0;
-  printf("data:%d\n", data[100]);
+
+  for (int i = 0; i < 100; i++)
+  {
+    data[i] = i;
+  }
+
+  printf("data:%p\n", data);
+  printf("data[50]: %d\n", data[50]);
+  free(data);
+  printf("after free:%d\n", data[50]);
   return 0;
 }
