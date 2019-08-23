@@ -3,9 +3,9 @@
 
 int main()
 {
-  int *data = malloc(100);
+  int *data = NULL;
+  data = (int *)malloc(100 * sizeof(int));
   data[100] = 0;
-
-  printf("data: %d \n", data[100]);
+  printf("data:%d\n", data[100]);
   return 0;
 }
