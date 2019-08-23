@@ -14,6 +14,6 @@ int main()
   printf("data:%p\n", data);
   printf("data[50]: %d\n", data[50]);
   free(data);
-  printf("after free:%d\n", data[50]);
+  printf("after free:%p\n", data);
   return 0;
 }
