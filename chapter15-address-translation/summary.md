@@ -23,3 +23,9 @@ There are two hardware registers within each CPU:
 * Base register. Record a process' start address in physical memory.
 * Bound register. This register has two implementations: it can be the size of the address space or the end of the phsysical address space. 
 
+A equation: 
+
+```
+Physical address = virtual address + base address
+```
+
