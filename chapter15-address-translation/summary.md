@@ -29,3 +29,7 @@ A equation:
 Physical address = virtual address + base address
 ```
 
+The steps of a virtual address being converted to a physical address is quite simple: 
+
+1. Check the virtual address in inside the bounds, the bounds register stores the virtual address not the physical address.
+2. Plus the virtual address and base address(physical address) to get the final physical address.
