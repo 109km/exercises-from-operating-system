@@ -58,10 +58,10 @@ parser.add_option("-c", help="compute answers for me",
 
 (options, args) = parser.parse_args()
 
-print "ARG seed", options.seed
-print "ARG address space size", options.asize
-print "ARG phys mem size", options.psize
-print ""
+print("ARG seed", options.seed)
+print("ARG address space size", options.asize)
+print("ARG phys mem size", options.psize)
+print("")
 
 random.seed(options.seed)
 asize = convert(options.asize)
@@ -69,15 +69,15 @@ psize = convert(options.psize)
 addresses = str(options.addresses)
 
 if psize <= 1:
-    print 'Error: must specify a non-zero physical memory size.'
+    print('Error: must specify a non-zero physical memory size.')
     exit(1)
 
 if asize == 0:
-    print 'Error: must specify a non-zero address-space size.'
+    print('Error: must specify a non-zero address-space size.')
     exit(1)
 
 if psize <= asize:
-    print 'Error: physical memory size must be GREATER than address space size (for this simulation)'
+    print('Error: physical memory size must be GREATER than address space size (for this simulation)')
     exit(1)
 
 #
@@ -116,22 +116,22 @@ else:
 
 
 if len0 > asize/2.0 or len1 > asize/2.0:
-    print 'Error: length register is too large for this address space'
+    print('Error: length register is too large for this address space')
     exit(1)
 
 
-print 'Segment register information:'
-print ''
-print '  Segment 0 base  (grows positive) : 0x%08x (decimal %d)' % (base0, base0)
-print '  Segment 0 limit                  : %d' % (len0)
-print ''
-print '  Segment 1 base  (grows negative) : 0x%08x (decimal %d)' % (base1+len1, base1+len1)
-print '  Segment 1 limit                  : %d' % (len1)
-print ''
+print('Segment register information:')
+print('')
+print('  Segment 0 base  (grows positive) : 0x%08x (decimal %d)' % (base0, base0))
+print('  Segment 0 limit                  : %d' % (len0))
+print('')
+print('  Segment 1 base  (grows negative) : 0x%08x (decimal %d)' % (base1+len1, base1+len1))
+print('  Segment 1 limit                  : %d' % (len1))
+print('')
 nbase1  = base1 + len1
 
 if (len0 + base0) > (base1) and (base1 > base0):
-    print 'Error: segments overlap in physical memory'
+    print('Error: segments overlap in physical memory')
     exit(1)
 
 
@@ -147,45 +147,45 @@ else:
 #
 # now, need to generate virtual address trace
 #
-print 'Virtual Address Trace'
+print('Virtual Address Trace')
 i = 0
 for vStr in addrList:
     # vaddr = int(asize * random.random())
     vaddr = int(vStr)
     if vaddr < 0 or vaddr >= asize:
-        print 'Error: virtual address %d cannot be generated in an address space of size %d' % (vaddr, asize)
+        print('Error: virtual address %d cannot be generated in an address space of size %d' % (vaddr, asize))
         exit(1)
     if options.solve == False:
-        print '  VA %2d: 0x%08x (decimal: %4d) --> PA or segmentation violation?' % (i, vaddr, vaddr)
+        print('  VA %2d: 0x%08x (decimal: %4d) --> PA or segmentation violation?' % (i, vaddr, vaddr))
     else:
         paddr = 0
         if (vaddr >= (asize / 2)):
             # seg 1
             paddr = nbase1 + (vaddr - asize)
             if paddr < base1:
-                print '  VA %2d: 0x%08x (decimal: %4d) --> SEGMENTATION VIOLATION (SEG1)' % (i, vaddr, vaddr)
+                print('  VA %2d: 0x%08x (decimal: %4d) --> SEGMENTATION VIOLATION (SEG1)' % (i, vaddr, vaddr))
             else:
-                print '  VA %2d: 0x%08x (decimal: %4d) --> VALID in SEG1: 0x%08x (decimal: %4d)' % (i, vaddr, vaddr, paddr, paddr)
+                print('  VA %2d: 0x%08x (decimal: %4d) --> VALID in SEG1: 0x%08x (decimal: %4d)' % (i, vaddr, vaddr, paddr, paddr))
         else:
             # seg 0
             if (vaddr >= len0):
-                print '  VA %2d: 0x%08x (decimal: %4d) --> SEGMENTATION VIOLATION (SEG0)' % (i, vaddr, vaddr)
+                print('  VA %2d: 0x%08x (decimal: %4d) --> SEGMENTATION VIOLATION (SEG0)' % (i, vaddr, vaddr))
             else:
                 paddr = vaddr + base0
-                print '  VA %2d: 0x%08x (decimal: %4d) --> VALID in SEG0: 0x%08x (decimal: %4d)' % (i, vaddr, vaddr, paddr, paddr)
+                print('  VA %2d: 0x%08x (decimal: %4d) --> VALID in SEG0: 0x%08x (decimal: %4d)' % (i, vaddr, vaddr, paddr, paddr))
     i += 1
 
-print ''
+print('')
 
 if options.solve == False:
-    print 'For each virtual address, either write down the physical address it translates to'
-    print 'OR write down that it is an out-of-bounds address (a segmentation violation). For'
-    print 'this problem, you should assume a simple address space with two segments: the top'
-    print 'bit of the virtual address can thus be used to check whether the virtual address'
-    print 'is in segment 0 (topbit=0) or segment 1 (topbit=1). Note that the base/limit pairs'
-    print 'given to you grow in different directions, depending on the segment, i.e., segment 0'
-    print 'grows in the positive direction, whereas segment 1 in the negative. '
-    print ''
+    print('For each virtual address, either write down the physical address it translates to')
+    print('OR write down that it is an out-of-bounds address (a segmentation violation). For')
+    print('this problem, you should assume a simple address space with two segments: the top')
+    print('bit of the virtual address can thus be used to check whether the virtual address')
+    print('is in segment 0 (topbit=0) or segment 1 (topbit=1). Note that the base/limit pairs')
+    print('given to you grow in different directions, depending on the segment, i.e., segment 0')
+    print('grows in the positive direction, whereas segment 1 in the negative. ')
+    print('')
 
 
 
