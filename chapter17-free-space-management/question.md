@@ -69,7 +69,6 @@ Free List [ Size 3 ]:
 [ addr:1008 sz:12 ]
 [ addr:1020 sz:80 ]
 
-
 ptr[2] = Alloc(8)
  returned 1012 (searched 3 elements)
 Free List [ Size 2 ]: 
