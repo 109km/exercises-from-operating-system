@@ -77,10 +77,10 @@ it is sometimes easier to use this simulator if you run with the verbose flag
 example above, run with the -v flag:
 
 Page Table (from entry 0 down to the max size)
-  [       0]   0x8000000c
+  [       0]   0x0000000c
   [       1]   0x00000000
   [       2]   0x00000000
-  [       3]   0x80000006
+  [       3]   0x00000006
 
 Your job, then, is to use this page table to translate the virtual addresses
 given to you in the trace to physical addresses. Let's look at the first one:
