@@ -7,11 +7,11 @@ import math
 
 def mustbepowerof2(bits, size, msg):
     if math.pow(2,bits) != size:
-        print 'Error in argument: %s' % msg
+        print('Error in argument: %s' % msg)
         sys.exit(1)
 def mustbemultipleof(bignum, num, msg):
     if (int(float(bignum)/float(num)) != (int(bignum) / int(num))):
-        print 'Error in argument: %s' % msg
+        print('Error in argument: %s' % msg)
         sys.exit(1)
 
 def convert(size):
@@ -50,13 +50,13 @@ parser.add_option('-c',                             help='compute answers for me
 
 (options, args) = parser.parse_args()
 
-print 'ARG seed',               options.seed
-print 'ARG address space size', options.asize
-print 'ARG phys mem size',      options.psize
-print 'ARG page size',          options.pagesize
-print 'ARG verbose',            options.verbose
-print 'ARG addresses',          options.addresses
-print ''
+print('ARG seed',               options.seed)
+print('ARG address space size', options.asize)
+print('ARG phys mem size',      options.psize)
+print('ARG page size',          options.pagesize)
+print('ARG verbose',            options.verbose)
+print('ARG addresses',          options.addresses)
+print('')
 
 random.seed(options.seed)
 
@@ -66,19 +66,19 @@ pagesize = convert(options.pagesize)
 addresses = str(options.addresses)
 
 if psize <= 1:
-    print 'Error: must specify a non-zero physical memory size.'
+    print('Error: must specify a non-zero physical memory size.')
     exit(1)
 
 if asize < 1:
-    print 'Error: must specify a non-zero address-space size.'
+    print('Error: must specify a non-zero address-space size.')
     exit(1)
 
 if psize <= asize:
-    print 'Error: physical memory size must be GREATER than address space size (for this simulation)'
+    print('Error: physical memory size must be GREATER than address space size (for this simulation)')
     exit(1)
 
 if psize >= convert('1g') or asize >= convert('1g'):
-    print 'Error: must use smaller sizes (less than 1 GB) for this simulation.'
+    print('Error: must use smaller sizes (less than 1 GB) for this simulation.')
     exit(1)
 
 mustbemultipleof(asize, pagesize, 'address space must be a multiple of the pagesize')
@@ -105,20 +105,20 @@ pagemask = (1 << pagebits) - 1
 # vpnmask  = ctypes.c_uint32(~pagemask).value
 vpnmask = 0xFFFFFFFF & ~pagemask
 #if vpnmask2 != vpnmask:
-#    print 'ERROR'
+#    print('ERROR')
 #    exit(1)
-# print 'va:%d page:%d vpn:%d -- %08x %08x' % (vabits, pagebits, vpnbits, vpnmask, pagemask)
+# print('va:%d page:%d vpn:%d -- %08x %08x' % (vabits, pagebits, vpnbits, vpnmask, pagemask))
 
-print ''
-print 'The format of the page table is simple:'
-print 'The high-order (left-most) bit is the VALID bit.'
-print '  If the bit is 1, the rest of the entry is the PFN.'
-print '  If the bit is 0, the page is not valid.'
-print 'Use verbose mode (-v) if you want to print the VPN # by'
-print 'each entry of the page table.'
-print ''
+print('')
+print('The format of the page table is simple:')
+print('The high-order (left-most) bit is the VALID bit.')
+print('  If the bit is 1, the rest of the entry is the PFN.')
+print('  If the bit is 0, the page is not valid.')
+print('Use verbose mode (-v) if you want to print the VPN # by')
+print('each entry of the page table.')
+print('')
 
-print 'Page Table (from entry 0 down to the max size)'
+print('Page Table (from entry 0 down to the max size)')
 for v in range(0,vpages):
     done = 0
     while done == 0:
@@ -127,23 +127,23 @@ for v in range(0,vpages):
             if used[u] == 0:
                 used[u] = 1
                 done = 1
-                # print '%8d - %d' % (v, u)
+                # print('%8d - %d' % (v, u))
                 if options.verbose == True:
-                    print '  [%8d]  ' % v,
+                    print('  [%8d]  ' % v,)
                 else:
-                    print '  ',
-                print '0x%08x' % (0x80000000 | u)
+                    print('  ',)
+                print('0x%08x' % (0x80000000 | u))
                 pt.insert(v,u)
         else:
-            # print '%8d - not valid' % v
+            # print('%8d - not valid' % v)
             if options.verbose == True:
-                print '  [%8d]  ' % v,
+                print('  [%8d]  ' % v,)
             else:
-                print '  ',
-            print '0x%08x' % 0
+                print('  ',)
+            print('0x%08x' % 0)
             pt.insert(v,-1)
             done = 1
-print ''            
+print(''            )
 
 
 #
@@ -160,26 +160,26 @@ else:
     addrList = addresses.split(',')
 
 
-print 'Virtual Address Trace'
+print('Virtual Address Trace')
 for vStr in addrList:
     # vaddr = int(asize * random.random())
     vaddr = int(vStr)
     if options.solve == False:
-        print '  VA 0x%08x (decimal: %8d) --> PA or invalid address?' % (vaddr, vaddr)
+        print('  VA 0x%08x (decimal: %8d) --> PA or invalid address?' % (vaddr, vaddr))
     else:
         paddr = 0
         # split vaddr into VPN | offset
         vpn = (vaddr & vpnmask) >> pagebits
         if pt[vpn] < 0:
-            print '  VA 0x%08x (decimal: %8d) -->  Invalid (VPN %d not valid)' % (vaddr, vaddr, vpn)
+            print('  VA 0x%08x (decimal: %8d) -->  Invalid (VPN %d not valid)' % (vaddr, vaddr, vpn))
         else:
             pfn    = pt[vpn]
             offset = vaddr & pagemask
             paddr  = (pfn << pagebits) | offset
-            print '  VA 0x%08x (decimal: %8d) --> %08x (decimal %8d) [VPN %d]' % (vaddr, vaddr, paddr, paddr, vpn)
-print ''
+            print('  VA 0x%08x (decimal: %8d) --> %08x (decimal %8d) [VPN %d]' % (vaddr, vaddr, paddr, paddr, vpn))
+print('')
 
 if options.solve == False:
-    print 'For each virtual address, write down the physical address it translates to'
-    print 'OR write down that it is an out-of-bounds address (e.g., segfault).'
-    print ''
+    print('For each virtual address, write down the physical address it translates to')
+    print('OR write down that it is an out-of-bounds address (e.g., segfault).')
+    print('')
