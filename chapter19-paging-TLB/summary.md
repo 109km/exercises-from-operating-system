@@ -6,6 +6,19 @@ The traditional page talbes are very slow, so `TLB` is created to increase the p
 
 **Remember the key of computer's world is another level of abstraction**
 
-## How the CPU acess data from memory? 
+## How does the CPU acess data from memory? 
 
 ![memory-visit-progress.jpg](./memory-visit-progress.jpg)
+
+
+## TLB's contents
+
+A TLB's entry is like:
+
+```
+VPN | PFN | other bits
+```
+
+So we can find the PFN through VPN and get the physical address directly.
+
+![a-tlb-content.jpg](./a-tlb-content.jpg)
