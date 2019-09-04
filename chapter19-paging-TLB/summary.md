@@ -1,5 +1,8 @@
 # Paging: Faster Translations(TLBs)
 
+## Background
+
+The traditional page talbes are very slow, so `TLB` is created to increase the page tables visiting speed. Actually it's a kind of cache. It's also a hardware inside the CPU, it stores some page tables' data.
 
 
 ## How the CPU acess data from memory? 
