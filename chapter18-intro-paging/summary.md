@@ -55,3 +55,10 @@ number (VPN), and looks up the page-table entry (PTE)at that index in order to f
 A PTE's structure is shown below:
 
 ![page-table-entry.jpg](./page-table-entry.jpg)
+
+## Paging is too slow
+
+The process of accessing memory with paging is shown in pseudo-code below:
+
+![process-of-accessing-memory-with-paging.jpg](process-of-accessing-memory-with-paging.jpg)
+
