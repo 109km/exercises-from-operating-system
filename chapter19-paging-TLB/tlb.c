@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 
   /* perform experiments */
   total = run_trials(page_size, pages, trials);
-  printf("%ld\t%ld\t%f\n", pages, trials, total);
+  printf("pages=%ld\ttrials=%ld\ttotal time=%f\n", pages, trials, total);
   return 0;
 }
 
