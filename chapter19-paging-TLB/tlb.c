@@ -11,7 +11,6 @@
 #include <unistd.h>
 #include <sched.h>
 
-#define SAMPLES 0x09000000
 #define BASE_10 10
 #define MS_PER_SEC 1000000
 
@@ -85,6 +84,6 @@ double run_trials(int page_size, int num_pages, int trials)
   }
   trial_time = (end.tv_sec - start.tv_sec) * MS_PER_SEC + end.tv_usec - start.tv_usec;
   free(arr);
-  return trial_time;
-  // return trial_time / (double)(num_pages * trials);
+  // return trial_time;
+  return trial_time / (double)(num_pages * trials);
 }
