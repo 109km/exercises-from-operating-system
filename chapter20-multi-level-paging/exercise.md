@@ -161,3 +161,10 @@ PTE content(found in Page 33@8) = 0xb5 = 10110101, the first bit is valid, and t
 
 VA's offset is `11100`, so the PA = 0110101(page 53) 11100(28th) = Ox6bc, the value is 0x08.
 
+The VA only exsits in programs, the steps are:
+
+1. Translate VA to this format: PDEIndex | PTEIndex | Offset
+2. Find the PDE content through PDBR and PDEIndex
+3. Get the PTE content PFN through translating the PDE content
+4. Get the Page table's PFN thgough translating the PTE content
+5. PA = PTE's PFN << SHIFT + Offset
