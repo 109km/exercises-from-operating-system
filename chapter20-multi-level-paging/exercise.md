@@ -146,3 +146,18 @@ Virtual Address 2592: Translates To What Physical Address (And Fetches what Valu
 Virtual Address 3e99: Translates To What Physical Address (And Fetches what Value)? Or Fault?
 ```
 
+Page Size = 32 byte(2^5)
+Physical memory has 128(2^7) pages.
+Virtual memory has 1024(2^10) pages.
+
+So VA has 10 bits for VPN, and 5 bits for offset.
+And PA has 7 bits for VPN, and 5 bits for offset.
+
+0x611c = 11000 01000 11100
+The first 5-bit is `11000` shows PDEIndex = 24, and the following 5-bit is `01000` shows PTEIndex = 8.
+
+PDE content(found in Page 108@24) = 0xa1 = 10100001, the first bit is valid, and the PFN = 33
+PTE content(found in Page 33@8) = 0xb5 = 10110101, the first bit is valid, and the PFN = 53
+
+VA's offset is `11100`, so the PA = 0110101(page 53) 11100(28th) = Ox6bc, the value is 0x08.
+
