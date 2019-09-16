@@ -31,3 +31,26 @@ Let's take a look at the swap thing:
 In this picture, there're 4 pages in physical memory, and 8 pages in swap space.
 
 Pay attention to the processes' numbers and VPNs, we find that the Proc0,Proc1,Proc2 are not totally in the memory, some of their pages are in the swap space, and Proc3 is totally in the swap space which means it's not running at all.
+
+
+## Present bit
+
+In order to realize the swapping function, more infomation is needed in each PTE. This infomation is called `present bit`. It's used to show that if this page table is in the memory(value = 1) or on the disk(value = 0).
+
+## Page fault
+
+When hardware finds that this address is on the disk, it will cause `page fault`, a particular piece of code known as `page fault handler` will run and service the page fault.
+
+What happens if a page table is on the disk?
+
+There're 4 processes:
+
+1. Find the page table on the disk.
+2. Fetch this page into memory.
+3. Cause TLB miss, and cached in TLB.
+4. TLB hit!
+
+Let's take a look at the pseudo-code:
+
+![page-fault-control-flow.jpg](./page-fault-control-flow.jpg)
+
