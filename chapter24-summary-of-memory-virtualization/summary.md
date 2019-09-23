@@ -15,7 +15,11 @@ OS splits the whole memory into many small pages, like many cells in a cupboard,
 
 ### TLB
 
-TLB(Translation-lookaside buffer) is the cache for pages. When a CPU finds some address, it will search this address in TLB.
+TLB(Translation-lookaside buffer) is the cache for pages, it's a hardware. When the CPU tries to find an address, it will search this address in TLB.
+
+If hit, the CPU gets the result immediately. 
+
+If not, a TLB miss processing flow will begin.
 
 In this way, the speed of visiting addresses is much faster.
 
