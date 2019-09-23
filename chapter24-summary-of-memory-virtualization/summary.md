@@ -1,9 +1,15 @@
 # Summary Of Memory Virtualization
 
-## Abstraction Address
+## Abstraction Address(Virtual Address)
 
+All the addresses that allocated by the OS are abstraction addresses. 
+
+There's a translating relation between the abstraction address and physical address.
 
 ## Virtualizing techs for memory
+
+Most of the modern x86 CPUs have an MMU(memory management unit) and a TLB(Translation-lookaside buffer).
+
 
 ### Segmentation
 
@@ -15,7 +21,7 @@ OS splits the whole memory into many small pages, like many cells in a cupboard,
 
 ### TLB
 
-TLB(Translation-lookaside buffer) is the cache for pages, it's a hardware. When the CPU tries to find an address, it will search this address in TLB.
+TLB is the cache for pages, it's a hardware in the CPU. When the CPU tries to find an address, it will search this address in TLB.
 
 If hit, the CPU gets the result immediately. 
 
